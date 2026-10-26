@@ -1,0 +1,51 @@
+{
+  "notice": "DEMO ONLY. These records are illustrative placeholders, not authoritative Diablo IV data. Replace/import verified source datasets before production use.",
+  "items": [
+    {
+      "id": "demo-item-001",
+      "name": "Esempio oggetto (demo)",
+      "category": "oggetti",
+      "subcategory": "unico",
+      "description": "Record dimostrativo: non rappresenta un oggetto reale. Serve a verificare ricerca e schede.",
+      "sourceName": "Jarvis demo",
+      "sourceUrl": null,
+      "gameVersion": null,
+      "demo": true
+    },
+    {
+      "id": "demo-skill-001",
+      "name": "Esempio abilità (demo)",
+      "category": "abilità",
+      "description": "Record dimostrativo: dati reali da sincronizzare e verificare.",
+      "sourceName": "Jarvis demo",
+      "demo": true
+    },
+    {
+      "id": "demo-boss-001",
+      "name": "Esempio boss (demo)",
+      "category": "boss",
+      "description": "Record dimostrativo: non usare come guida di gioco.",
+      "sourceName": "Jarvis demo",
+      "demo": true
+    },
+    {
+      "id": "demo-material-001",
+      "name": "Esempio materiale (demo)",
+      "category": "farming",
+      "description": "Record dimostrativo: non rappresenta una fonte di drop reale.",
+      "sourceName": "Jarvis demo",
+      "demo": true
+    }
+  ],
+  "builds": [
+    {
+      "id": "demo-build-001",
+      "name": "Build di esempio (demo)",
+      "class": "Da verificare",
+      "goal": "Record dimostrativo",
+      "sourceName": "Jarvis demo",
+      "demo": true,
+      "note": "Non è una build utilizzabile in gioco."
+    }
+  ]
+}
