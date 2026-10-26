@@ -1,36 +1,46 @@
 <!doctype html>
 <html lang="it">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#090b10">
-<title>JARVIS • Diablo IV</title>
-<style>
-:root{color-scheme:dark;--bg:#090b10;--panel:#121720;--line:#283140;--gold:#d9b56d;--text:#eef2f8;--muted:#9aa6b7;--green:#7be0a2;--red:#ff8f8f}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#18202c 0,#090b10 55%);color:var(--text);font:16px system-ui,-apple-system,Segoe UI,sans-serif}
-main{max-width:900px;margin:auto;padding:24px 16px 60px}.brand{letter-spacing:.25em;color:var(--gold);font-weight:800;font-size:13px}.hero{padding:28px 0 18px}h1{font-size:clamp(30px,7vw,48px);margin:8px 0}p{color:var(--muted);line-height:1.55}.panel{background:rgba(18,23,32,.94);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 14px 40px #0003}h2{margin:0 0 8px;font-size:20px}.row{display:flex;gap:10px;flex-wrap:wrap}input{width:100%;min-width:0;background:#090d14;border:1px solid #344052;border-radius:11px;padding:14px;color:var(--text);font:inherit;margin:8px 0 10px}button{border:0;border-radius:11px;background:var(--gold);color:#17130b;font-weight:800;padding:13px 16px;font:inherit;cursor:pointer}button.secondary{background:#242d3a;color:var(--text);border:1px solid #3a4556}button:disabled{opacity:.55}.status{padding:11px 13px;border-radius:10px;background:#0a1017;border:1px solid var(--line);color:var(--muted);overflow-wrap:anywhere}.ok{color:var(--green)}.bad{color:var(--red)}pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:520px;overflow:auto;background:#080b10;border:1px solid var(--line);padding:14px;border-radius:12px;font-size:12px}.small{font-size:13px}.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:5px 9px;color:var(--muted);font-size:12px;margin:3px 4px 3px 0}
-</style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a0c10"><meta name="description" content="Jarvis, assistente Diablo IV per iPhone e Xbox.">
+<link rel="manifest" href="./manifest.json"><link rel="icon" href="./assets/jarvis.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./css/app.css"><title>JARVIS • Diablo IV</title>
 </head>
-<body><main>
-<div class="brand">JARVIS / DIABLO IV</div>
-<header class="hero"><h1>Il tuo assistente per Sanctuary.</h1><p>Obiettivo: raccogliere automaticamente le guide pubbliche e i dati delle build, per consultarli qui senza dover passare manualmente da una guida all'altra.</p></header>
-<section class="panel">
-<h2>Connessione</h2><p class="small">Verifica il collegamento al server.</p><div id="health" class="status">Controllo connessione…</div>
+<body>
+<header class="topbar"><a class="brand" href="#" aria-label="Jarvis Home"><span class="brand-mark">J</span><span>JARVIS <small>DIABLO IV</small></span></a><span id="connection" class="connection">Connessione…</span></header>
+<main>
+<section class="hero"><p class="eyebrow">YOUR SANCTUARY COMPANION</p><h1>La tua prossima build.<br><em>La tua prossima vittoria.</em></h1><p>Oggetti, build, abilità, Paragon, boss e farming. Tutto in un'unica schermata, mentre giochi su Xbox.</p><label class="searchbox"><span>⌕</span><input id="search" type="search" placeholder="Cerca oggetti, abilità, boss…" autocomplete="off"><button id="clearSearch" aria-label="Cancella ricerca">×</button></label><div id="searchHint" class="muted">Cerca nel catalogo disponibile.</div></section>
+<nav class="tabs" aria-label="Sezioni"><button class="tab active" data-view="home">Panoramica</button><button class="tab" data-view="catalog">Database</button><button class="tab" data-view="builds">Build</button><button class="tab" data-view="farm">Boss & farming</button><button class="tab" data-view="sources">Fonti</button></nav>
+<section id="view-home" class="view active">
+<div class="section-head"><div><p class="eyebrow">QUICK ACCESS</p><h2>Esplora Sanctuary</h2></div></div>
+<div class="feature-grid">
+<button class="feature" data-category="oggetti"><span class="feature-icon">✦</span><b>Oggetti</b><small>Unici, affissi e aspetti</small></button>
+<button class="feature" data-category="abilità"><span class="feature-icon">◈</span><b>Abilità</b><small>Skill e passive</small></button>
+<button class="feature" data-category="paragon"><span class="feature-icon">⌘</span><b>Paragon</b><small>Glifi e tabelloni</small></button>
+<button class="feature" data-category="boss"><span class="feature-icon">⚔</span><b>Boss</b><small>Obiettivi e bottino</small></button>
+<button class="feature" data-category="farming"><span class="feature-icon">◎</span><b>Farming</b><small>Materiali e attività</small></button>
+<button class="feature" data-view="builds"><span class="feature-icon">▤</span><b>Build</b><small>Guide e varianti</small></button>
+</div>
+<div class="section-head"><div><p class="eyebrow">DATABASE</p><h2>Elementi disponibili</h2></div><button class="text-button" data-view="catalog">Vedi tutto →</button></div>
+<div id="homeResults" class="card-grid"></div>
+<div class="notice"><b>Trasparenza dei dati</b><p>Gli elementi dimostrativi sono marcati come demo. Una fonte esterna non è considerata verificata solo perché il dato è stato importato.</p></div>
 </section>
-<section class="panel">
-<h2>Catalogo automatico Maxroll</h2><p>Jarvis prova a individuare le guide pubbliche disponibili. L'elenco dipende da ciò che Maxroll consente al server di leggere e non viene presentato come completo finché non è verificato.</p><button id="catalogBtn">Cerca guide automaticamente</button><div id="catalogStatus" class="status" style="margin-top:12px">Catalogo non ancora caricato.</div><div id="catalog"></div>
+<section id="view-catalog" class="view">
+<div class="section-head"><div><p class="eyebrow">LIBRARY</p><h2>Database</h2></div></div>
+<div class="filters"><label>Categoria<select id="category"><option value="tutti">Tutte</option><option value="oggetti">Oggetti</option><option value="abilità">Abilità</option><option value="paragon">Paragon</option><option value="boss">Boss</option><option value="farming">Farming</option><option value="guide">Guide</option></select></label><label>Classe<select id="gameClass"><option value="tutte">Tutte</option><option>Barbaro</option><option>Incantatore</option><option>Tagliagole</option><option>Druido</option><option>Negromante</option><option>Spiritista</option></select></label></div>
+<div id="catalogResults" class="card-grid"></div><p id="catalogStatus" class="muted"></p>
 </section>
-<section class="panel">
-<h2>Prova una guida</h2><p>Incolla l'indirizzo della guida, non quello del Planner. Jarvis proverà a individuare automaticamente i Planner collegati.</p><input id="guideUrl" type="url" value="https://maxroll.gg/d4/build-guides/blazing-scream-warlock-guide" aria-label="URL della guida Maxroll"><button id="importBtn">Leggi guida con Jarvis</button><div id="importStatus" class="status" style="margin-top:12px">Pronto.</div><div id="result"></div>
+<section id="view-builds" class="view">
+<div class="section-head"><div><p class="eyebrow">BUILD LAB</p><h2>Build e Planner</h2></div></div>
+<p>Importa un link pubblico di una guida o di un Planner Maxroll. Jarvis proverà a recuperare i dati accessibili e li mostrerà qui. L'importazione può fallire se la pagina non espone i dati al server.</p>
+<form id="importForm" class="import-form"><label for="guideUrl">Link guida o Planner Maxroll</label><input id="guideUrl" type="url" placeholder="https://maxroll.gg/d4/build-guides/…" required><button class="primary" type="submit">Importa in Jarvis</button></form>
+<div id="importStatus" class="status-card">Nessuna importazione avviata.</div><div id="buildResults"></div>
+<div class="section-head"><div><p class="eyebrow">SAVED DATA</p><h2>Build disponibili</h2></div></div><div id="savedBuilds" class="card-grid"></div>
 </section>
-<p class="small">Nota: questa versione è un prototipo di collegamento. Non dichiara ancora di contenere tutte le classi, tutte le build, l'intero database degli oggetti o le fonti di drop. Le informazioni mancanti verranno segnalate, non inventate.</p>
+<section id="view-farm" class="view"><div class="section-head"><div><p class="eyebrow">ENDGAME</p><h2>Boss & farming</h2></div></div><p>Consulta le voci disponibili nel database. Le ricette di evocazione e le fonti di drop verranno mostrate solo quando verificate per la patch selezionata.</p><div id="farmResults" class="card-grid"></div></section>
+<section id="view-sources" class="view"><div class="section-head"><div><p class="eyebrow">DATA INTEGRITY</p><h2>Fonti e aggiornamenti</h2></div></div><p>Jarvis distingue i dati di esempio, quelli importati e quelli verificati. Controlla qui quali fonti sono configurate.</p><div id="sourceResults" class="source-list"></div></section>
 </main>
-<script>
-const API="https://jarvis-diablo4.onrender.com";
-const $=id=>document.getElementById(id);
-async function api(path,options={}){const r=await fetch(API+path,options);const data=await r.json().catch(()=>({error:"Risposta non leggibile dal server"}));if(!r.ok)throw new Error(data.error||("Errore HTTP "+r.status)+(data.detail?": "+data.detail:""));return data}
-(async()=>{try{const d=await api("/api/health");$("health").innerHTML='<span class="ok">● Backend raggiungibile.</span> '+JSON.stringify(d)}catch(e){$("health").innerHTML='<span class="bad">● Connessione non riuscita:</span> '+e.message}})();
-$("catalogBtn").onclick=async()=>{const b=$("catalogBtn");b.disabled=true;$("catalogStatus").textContent="Sto cercando le guide pubbliche su Maxroll… al primo avvio il server potrebbe impiegare un po’."; $("catalog").innerHTML="";try{const d=await api("/api/catalog");$("catalogStatus").innerHTML=(d.ok?'<span class="ok">Ricerca completata.</span> ':'<span class="bad">Catalogo non recuperato.</span> ')+d.message+" Guide trovate: "+d.count; if(d.guides?.length){$("catalog").innerHTML=d.guides.map(g=>'<div class="status" style="margin-top:8px"><strong>'+esc(g.title)+'</strong><br><a href="'+esc(g.url)+'" target="_blank" rel="noopener" style="color:var(--gold)">Apri guida originale</a></div>').join("")}if(d.errors?.length)$("catalog").innerHTML+='<pre>'+esc(d.errors.join("\n"))+'</pre>'}catch(e){$("catalogStatus").innerHTML='<span class="bad">'+esc(e.message)+'</span>'}finally{b.disabled=false}};
-$("importBtn").onclick=async()=>{const b=$("importBtn");b.disabled=true;$("importStatus").textContent="Jarvis sta leggendo la guida…";$("result").innerHTML="";try{const d=await api("/api/import-guide",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url:$("guideUrl").value.trim()})});$("importStatus").innerHTML='<span class="ok">Risposta ricevuta.</span> Planner rilevati: '+d.plannersFound;$("result").innerHTML='<pre>'+esc(JSON.stringify(d,null,2))+'</pre>'}catch(e){$("importStatus").innerHTML='<span class="bad">'+esc(e.message)+'</span>'}finally{b.disabled=false}};
-function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-</script></body></html>
+<footer><span>JARVIS • DIABLO IV</span><span>Companion non ufficiale, non affiliato a Blizzard.</span></footer>
+<dialog id="detailDialog"><button class="dialog-close" id="closeDialog" aria-label="Chiudi">×</button><div id="detailContent"></div></dialog>
+<script src="./js/config.js"></script><script src="./js/app.js"></script>
+</body></html>
