@@ -1,14 +1,23 @@
 {
-  "name": "jarvis-diablo4-maxroll-bridge",
+  "name": "jarvis-diablo4-companion",
   "version": "1.0.0",
   "private": true,
-  "description": "Backend di Jarvis per leggere guide e dati Planner pubblici di Maxroll",
+  "description": "JARVIS Diablo IV mobile companion",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "db:migrate": "node scripts/migrate.js",
+    "db:seed": "node scripts/seed.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.21.2"
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "pg": "^8.13.1"
   }
 }
