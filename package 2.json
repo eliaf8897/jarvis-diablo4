@@ -1,0 +1,14 @@
+{
+  "name": "jarvis-diablo4-maxroll-bridge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend di Jarvis per leggere guide e dati Planner pubblici di Maxroll",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}
